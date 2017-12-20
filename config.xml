@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.bilalqaiser.waitressapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>OnlyCarrot Waitress</name>
+    <description>
+        App for the use of the waitress of OnlyCarrot Restaurant.
+    </description>
+    <author email="bilal_qaiser@hotmail.co.uk" href="http://www.bilalqaiser.com/portfolio">
+        Bilal Qaiser
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <preference name="statusbarbackgroundcolor" value="#E86C13" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <preference name="statusbaroverlaywebview" value="#false" />
+    </platform>
+    <preference name="Orientation" value="portrait" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackgroundColor" value="0xF2F2F2FF" />
+    <preference name="statusbarbackgroundcolor" value="#E86C13" />
+    <engine name="android" spec="^6.2.3" />
+    <engine name="browser" spec="^4.1.0" />
+    <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.6">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
+    </plugin>
+</widget>

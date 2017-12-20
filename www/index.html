@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!-- Author: Bilal Qaiser -->
+<!-- Year: 2017 -->
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Carrot Only Waitress</title>
+    <link rel="stylesheet" href="icons/material.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+
+
+    <div class="fix-top z-depth-1">
+
+    	<div class="valign-wrapper yellow darken-4 white-text">
+
+    		<h5 class="title">Carrot Only</h5>
+
+            <ul class="dropdown-content" id="submenu">
+                <li><a class="black-text action-clear">Clear</a></li>
+            </ul>
+
+    	<div>
+            <i class="material-icons waves-effect waves-light waves-circle scan-qrcode">camera</i>
+
+    		<i data-activites="submenu" data-gutter="5" data-contrainwidth="false" class="material-icons waves-effect waves-light waves-circle dropdown-button">more_vert</i>
+    	</div>
+
+    </div>
+
+    	<ul class="tabs yellow darken-4">
+
+    		<li class="tab">
+    			<a href="#cakes"
+    			class="white-text waves-effect waves-light">
+    			Cakes
+    			</a>
+    		</li>
+
+    		<li class="tab">
+    			<a href="#beverages"
+    			class="white-text waves-effect waves-light">
+    			Beverages
+    			</a>
+    		</li>
+
+    	</ul>
+    	</div>
+
+    	<div id="cakes" class="section">
+
+    		<h6 class="container brown-text">Piece of cake</h6>
+
+    	<div class="collection">
+    		<a class="collection-item waves-effect black-text">Only Carrot</a>
+
+    		<a class="collection-item waves-effect black-text">With Nutella</a>
+
+    		<a class="collection-item waves-effect black-text">Of Brigadeiro</a>
+
+    		<a class="collection-item waves-effect black-text">Sugared</a>
+    	</div>
+
+    	<h6 class="container brown-text">Whole Cake</h6>
+
+    	<div class="collection">
+    		<a class="collection-item waves-effect black-text">Only Carrot</a>
+
+    		<a class="collection-item waves-effect black-text">With Nutella</a>
+
+    		<a class="collection-item waves-effect black-text">Of Brigadeiro</a>
+
+    		<a class="collection-item waves-effect black-text">Sugared</a>
+    	</div>
+    </div>
+
+
+
+
+
+
+<div id="beverages" class="section">
+
+    		<h6 class="container brown-text">Cafes</h6>
+    	<div class="collection">
+    		<a class="collection-item waves-effect black-text">Espresso</a>
+
+    		<a class="collection-item waves-effect black-text">Cappuccino</a>
+
+    		<a class="collection-item waves-effect black-text">Mochaccino</a>
+    	</div>
+
+    	<h6 class="container brown-text">Refrigerants</h6>
+    	<div class="collection">
+    		<a class="collection-item waves-effect black-text">Soda</a>
+
+    		<a class="collection-item waves-effect black-text">Guarana</a>
+
+    		<a class="collection-item waves-effect black-text">Coke</a>
+    	</div>
+
+
+    <h6 class="container brown-text">Juice</h6>
+    	<div class="collection">
+    		<a class="collection-item waves-effect black-text">Watermelon</a>
+
+    		<a class="collection-item waves-effect black-text">Tangerine</a>
+
+    		<a class="collection-item waves-effect black-text">Lemon</a>
+    	</div>
+    </div>
+
+
+
+<div class="fixed-action-btn">
+    <a href="#confirmation" id="confirm" class="btn-floating btn-large waves-effect waves-light brown modal-trigger">
+        <i class="material-icons">done</i>
+    </a>
+</div>
+
+
+<div class="modal modal-fixed-footer" id="confirmation">
+    <div class="modal-content">
+        <h5>Order View</h5>
+        <input type="number" class="validate" placeholder="table number" id="tablenum">
+        <blockquote id="orderview"></blockquote>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn deep-orange waves-effect wave-light modal-close">
+            Order
+        </button>
+        <button class="action-clear btn-flat waves-effect waves-red modal-close">
+            Cancel
+        </button>
+    </div>
+
+
+    <script src="cordova.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/waitressapp.js"></script>
+
+       <script>
+            function scan()
+            {
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        if(!result.cancelled)
+                        {
+                            if(result.format == "QR_CODE")
+                            {
+                                navigator.notification.prompt("Please enter name of data",  function(input){
+                                    var name = input.input1;
+                                    var value = result.text;
+                                    var data = localStorage.getItem("LocalData");
+                                    console.log(data);
+                                    data = JSON.parse(data);
+                                    data[data.length] = [name, value];
+                                    localStorage.setItem("LocalData", JSON.stringify(data));
+                                    alert("Done");
+                                });
+                            }
+                        }
+                    },
+                    function (error) {
+                        alert("Scanning failed: " + error);
+                    }
+               );
+            }
+            $(document).on("pagebeforeshow", "#display", function() {
+                $("table#allTable tbody").empty();
+                var data = localStorage.getItem("LocalData");
+                console.log(data);
+                data = JSON.parse(data);
+                var html = "";
+                for(var count = 0; count < data.length; count++)
+                {
+                    html = html + "<tr><td>" + data[count][0] + "</td><td><a href='javascript:openURL(\"" + data[count][1] + "\")'>" + data[count][1] + "</a></td></tr>";
+                }
+                $("table#allTable tbody").append(html).closest("table#allTable").table("refresh").trigger("create");
+            });
+            function openURL(url)
+            {
+                window.open(url, '_blank', 'location=yes');
+            }
+            //initialize
+            if(localStorage.getItem("LocalData") == null)
+            {
+                var data = [];
+                data = JSON.stringify(data);
+                localStorage.setItem("LocalData", data);
+            }
+        </script>
+</body>
+</html>
